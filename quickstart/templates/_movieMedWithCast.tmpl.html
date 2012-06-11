@@ -1,0 +1,34 @@
+﻿<div>{{:movies.length}} movies found</div>
+<ul>
+	{{for movies}}
+    <li class="movieListItemMedium tallBox">
+        <div class="caption">{{:#index+1}}: {{:name}}</div>
+        {{if boxArt.smallUrl}}
+        <img src="{{:boxArt.smallUrl}}" class="rightAlign"/>
+        {{else}}
+        <img src="/images/icon-nocover.png" class="rightAlign"/>
+        {{/if}}
+        <br/>
+        <div class="text">Year Released: {{:releaseYear}}</div>
+        <div class="text">rating: {{:rating}}</div>
+        <ul class="clear">{{createStars averageRating max=5/}}</ul>
+        {{for pricing}}
+        <!--<ul class="clear">{{createStars averageRating max=5 tmpl="rating"/}}</ul>-->
+        <div class="text clear">${{:salePrice}}</div>
+        {{if fullPrice !== salePrice}}
+        <div class="text highlightText">PRICED TO SELL!</div>
+        {{/if}}
+        {{/for}}
+        {{if stars.length > 0 cast.length > 0}}
+        <div class="text clear">Cast:</div>
+        <ul>
+            {{for stars cast}}
+	            <li>
+		            <div class="text">{{:name}}</div>
+                </li>
+            {{/for}}
+        </ul>
+        {{/if}}
+    </li>
+    {{/for}}
+</ul>

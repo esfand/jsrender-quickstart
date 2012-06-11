@@ -1,0 +1,32 @@
+﻿<div>{{:movies.length}} movies found</div>
+<ul>
+	{{for movies}}
+    <li class="movieListItemMedium extraTallBox ">
+        <div class="movieCaption">{{:#index+1}}: {{:name}}</div>
+        {{if boxArt.smallUrl}}
+        <img src="{{:boxArt.smallUrl}}" class="tiny center"/>
+        {{else}}
+        <img src="/images/icon-nocover.png" class="tiny center"/>
+        {{/if}}
+        <br/>
+        <div class="clear">
+            {{for warehouses}}
+                <div class="text newLine">Warehouse {{:number}}</div>
+                <ul>
+                    {{for locations}}
+                    <li>
+                        <div class="text newLine">sec {{:section}} : row {{:row}} : shelf {{:shelf}}</div>
+                        <div>
+                            <div style="display: block">{{:#data.section}}</div>
+                            <div style="display: block">{{:#parent.parent.data.number}}</div>
+                            <div style="display: block">{{:#parent.parent.parent.parent.data.name}}</div>
+                            <div style="display: block">{{:#view.data.section}}</div>
+                        </div>
+                    </li>
+                    {{/for}}
+                </ul>
+            {{/for}}
+        </div>
+    </li>
+    {{/for}}
+</ul>

@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="/css/styles.css" rel="stylesheet" type="text/css" />
+    <script src="/scripts/jquery-1.7.1.js" type="text/javascript"></script>
+    <script src="/scripts/jsrender.js" type="text/javascript"></script>
+    <script src="/js/moviedata.js" type="text/javascript"></script>
+</head>
+<body>
+    <div>
+        <a href="00-index.html" class="caption">Index</a>
+        <a href="http://twitter.com/john_papa" class="caption" style="margin-left:50px">@john_papa</a>
+    </div>
+    <h2>JsRender Quickstart - Iterating with for and #data</h2>
+    <div id="movieContainer" class="resultsPanel movieListItemMedium">
+    </div>
+    <script id="movieTemplate" type="text/x-jsrender">
+            <div class="caption">{{:name!}}</div>
+			<img src="{{:boxArt.smallUrl}}"/>
+		    <div class="text">Year Released: {{:releaseYear}}</div>
+		    <div class="text">rating: {{:rating}}</div>
+            <ul>
+                {{for ratingStars}}
+                <li class="rating {{:#data}}"></li>
+                {{/for}}
+            </ul>
+    </script>
+    <script type="text/javascript"> 
+        $(function () {
+            my.vm = {
+                movies: my.getMovies()
+            };
+            var htmlString = $("#movieTemplate").render(my.vm.movies[1]);
+            $("#movieContainer").html(htmlString);
+        });
+    </script>
+    <div class="footer">
+    <h4>Concepts</h4>
+    <ul>
+        <li><span class="text caption">Iterating through arrays:</span><span class="text">{{for}} ... {{/for}}</span></li>
+        <li><span class="text caption">Current item in the iteration: </span><span class="text">#data</span></li>
+    </ul>
+    </div>
+</body>
+</html>

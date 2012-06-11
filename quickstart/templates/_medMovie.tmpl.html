@@ -1,0 +1,38 @@
+﻿{{for movies}}
+<li class="movieListItemMedium">
+    <div class="caption">
+        {{:name}}</div>
+    {{if boxArt.smallUrl}}
+    <!-- these are identical -->
+    <!-- 
+		<img src="{{:boxArt.smallUrl}}"/> 
+		<img src="{{:#data.boxArt.smallUrl}}"/>
+		<img src="{{:#view.data.boxArt.smallUrl}}"/>
+		-->
+    <!-- this shows the 3rd movie, always -->
+    <!-- 
+		<img src="{{:#parent.parent.data[2].boxArt.smallUrl}}"/>
+		-->
+    <img src="{{:boxArt.smallUrl}}" />
+    {{else}}
+    <img src="../images/icon-nocover.png" />
+    {{/if}}
+    <br />
+    <div class="text">
+        Year Released: {{:releaseYear}}</div>
+    <div class="text">
+        rating: {{:rating}}</div>
+    <ul>
+        {{for ratingStars}}
+        <li class="rating {{:#data}}" />
+        {{/for}}
+    </ul>
+    <br />
+    {{for pricing}}
+    <div class="text">${{:salePrice}}</div>
+        {{if fullPrice !== salePrice}}
+        <div class="text highlightText">PRICED TO SELL!</div>
+        {{/if}}
+    {{/for}} 
+</li>
+{{/for}} 

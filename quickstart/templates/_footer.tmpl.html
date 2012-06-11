@@ -1,0 +1,13 @@
+﻿{{for metadata}}
+<span class="strongLabel">Concepts</span>
+<ul>
+    {{for concepts}}
+    <li><span class="text caption">{{:concept}}</span>
+        <pre>{{for lines}}
+{{>#data}}
+{{/for}}
+        </pre>
+    </li>
+    {{/for}}
+</ul>
+{{/for}}

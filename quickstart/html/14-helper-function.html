@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="/css/styles.css" rel="stylesheet" type="text/css" />
+    <script src="/scripts/jquery-1.7.1.js" type="text/javascript"></script>
+    <script src="/scripts/jsrender.js" type="text/javascript"></script>
+    <script src="/js/jsrender.helpers.js" type="text/javascript"></script>
+    <script src="/js/jsrender.utils.js" type="text/javascript"></script>
+    <script src="/js/moviedata.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="header"></div>
+    <div id="movieContainer" class="resultsPanel">
+        <table>
+            <thead style="font-weight: bold">
+                <td>Movies</></td><td>Languages</td>
+            </thead>
+            <tbody id="movieRows"></tbody>
+        </table>
+    </div>
+    <div class="footer"></div>
+<script id="myTmpl" type="text/x-jsrender">
+	<tr>
+		<td>{{:name}}</td>
+		<td>
+            {{for languages}}
+	            {{:#data}}{{:~formatLanguages(#view)}}
+            {{/for}}
+		</td>
+	</tr>
+</script>
+    <script type="text/javascript"> 
+        $(function () {
+            my.vm = (function () {
+                var metadata = {
+                    title: "JsRender Quickstart - Helper Function",
+                    concepts: [
+                        {
+                            concept: "Using a helper function instead of 'Allowing code'",
+                            lines: [
+                                "$.views.helpers('formatLanguages', function () {",
+                                "    var view = this;",
+                                "    var text = '';",
+                                "    if (view.index === view.parent.data.length - 2) {",
+                                "        text = ' and';",
+                                "    } else if (view.index < view.parent.data.length - 2) {",
+                                "        text = ',';",
+                                "    }",
+                                "    return text;",
+                                "});"
+                            ]
+                        }]
+                },
+                    movies = my.getMovies(),
+                    renderTemplate = my.utils.renderExternalTemplate;
+                return {
+                    metadata: metadata,
+                    movies: movies,
+                    renderExternalTemplate: renderTemplate
+                };
+            })();
+
+//            $.views.helpers("formatLanguages", function (view) {
+//                var text = "";
+//                if (view.index === view.parent.data.length - 2) {
+//                    text = " and";
+//                } else if (view.index < view.parent.data.length - 2) {
+//                    text = ",";
+//                }
+//                return text;
+//            });
+
+            $.templates("movieTmpl", {
+                markup: "#myTmpl",
+                allowCode: false
+            });
+
+            $("#movieRows").html(
+	            $.render.movieTmpl(my.vm.movies)
+            );
+
+            my.vm.renderExternalTemplate("header", "#header", my.vm);
+            my.vm.renderExternalTemplate("footer", ".footer", my.vm, false);
+        });
+    </script>
+</body>
+</html>

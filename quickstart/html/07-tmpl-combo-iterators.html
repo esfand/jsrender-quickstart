@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="/css/styles.css" rel="stylesheet" type="text/css" />
+    <script src="/scripts/jquery-1.7.1.js" type="text/javascript"></script>
+    <script src="/scripts/jsrender.js" type="text/javascript"></script>
+    <script src="/js/moviedata.js" type="text/javascript"></script>
+</head>
+<body>
+    <div>
+        <a href="00-index.html" class="caption">Index</a>
+        <a href="http://twitter.com/john_papa" class="caption" style="margin-left:50px">@john_papa</a>
+    </div>
+    <h2>JsRender Quickstart - Nested Templates (tmpl), #index, Combo Iterators, If's with Or's</h2>
+    <div id="movieContainer" class="resultsPanel">
+    </div>
+    <script id="movieTemplateOuter" type="text/x-jsrender">
+        <div>{{:movies.length}} movies found</div>
+		<ul>
+			{{for movies tmpl="#movieTemplateMedium"/}}
+		</ul>
+    </script>
+    <script id="movieTemplateMedium" type="text/x-jsrender">
+	<li class="movieListItemMedium tallBox">
+		<div class="caption">{{:#index+1}}: {{:name}}</div>
+		{{if boxArt.smallUrl}}
+			<img src="{{:boxArt.smallUrl}}" class="rightAlign"/>
+		{{else}}
+			<img src="../images/icon-nocover.png" class="rightAlign"/>
+		{{/if}}
+        <br/>
+		<div class="text">Year Released: {{:releaseYear}}</div>
+		<div class="text">rating: {{:rating}}</div>
+        <ul class="clear">
+            {{for ratingStars}}
+                <li class="rating {{:#data}}"/>
+            {{/for}}
+        </ul>
+        {{if pricing}}
+		    <div class="text clear">${{:pricing.salePrice}}</div>
+            {{if pricing.fullPrice !== pricing.salePrice}}
+		        <div class="text highlightText">PRICED TO SELL!</div>
+            {{/if}}
+        {{/if}}
+        {{if stars.length > 0 || cast.length > 0}}
+		<div class="text">Cast:</div>
+        <ul>
+			{{for stars cast tmpl="#castTemplate"/}}
+        </ul>
+        {{/if}}
+	</li>
+    </script>
+    <script id="castTemplate" type="text/x-jsrender">
+	<li>
+		<div class="text">{{:name}}</div>
+    </li>
+    </script>
+    <script type="text/javascript"> 
+        $(document).ready(function () {
+            my.vm = {
+                movies: my.getMovies()
+            };
+            $("#movieContainer").html($("#movieTemplateOuter").render(my.vm));
+        });
+    </script>
+    <div class="footer">
+    <h4>Concepts</h4>
+    <ul>
+        <li><span class="text caption">Iterating through a nested template with the tmpl keyword: </span>
+            <span class="text">{{for myArray tmpl="#template2"/}}</span>
+        </li>
+        <li><span class="text caption">Indexers </span><span class="text">{{:#index}}</span></li>
+        <li><span class="text caption">Iterating through multiple arrays</span><span class="text">{{for array1 array2 tmpl="#myTemplate"/}}</span></li>
+        <li><span class="text caption">Multiple If expressions</span><span class="text">{{if array1.length > 0 || array2.length > 0}}</span></li>
+    </ul>
+    </div>
+</body>
+</html>
